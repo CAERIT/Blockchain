@@ -10,7 +10,7 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
 
     for (int i = 0; i < length; i++) {
         for (int round = 0; round < 8; round++) {
-            unsigned char g = (B & C) | (C & D);
+            unsigned char g = (B & C) | (C & D); 
             unsigned char old_A = A;
             A = (A + (msg[i] ^ B)) & 0xFF;
             B = (B ^ g) & 0xFF;
