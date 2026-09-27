@@ -5,7 +5,7 @@
 #include "user.h"
 
 struct User* add(struct User * head, char* Username) {
-	Sleep((rand() % 10 + 1) * 1000);
+	Sleep((rand() % 10 + 1) * 10);// sleep time lowered by 100x during testing
 
 	struct User* newHead = (struct User*)malloc(sizeof(struct User));
 	strcpy(newHead->Username, Username);
