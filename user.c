@@ -120,8 +120,11 @@ void verify(struct User* curr) {
                 return;
             }
         }
-        curr = prev; // Incorrectly updating the head of the list
-        prev = curr->next;
+        prev = curr; //Correctly update the head of the list
+        curr = curr->next;
+
+        //curr = prev; // Incorrectly updating the head of the list
+        //prev = curr->next;
         height++;
     }
 
