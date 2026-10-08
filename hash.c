@@ -1,15 +1,29 @@
 #include "hash.h"
 
 unsigned char* SSHA(const unsigned char* msg, size_t length) {
-    unsigned char A, B, C, D, E; //Initial Seed Value
+    unsigned char A, B, C, D, E,a,b,c,d,e; //Initial Seed Value
     A = 56;
     B = 99;
     C = 102;
     D = 67;
     E = 76;
+    a, b, c, d, e = 0;
 
     for (int i = 0; i < length; i++) {
         for (int round = 0; round < 8; round++) {
+            a = E;
+            b = A;
+            c = E + (A >> 2);
+            d = (A >> 2) ^ (B >> 1);
+            e = msg[i] + (B >> 2) + ((B & C) | (C & D));
+
+            A = a & 0xff;
+            B = b & 0xff;
+            C = c & 0xff;
+            D = d & 0xff;
+            E = e & 0xff;
+
+            /*
             unsigned char g = (B & C) | (C & D); 
             unsigned char old_A = A;
             A = (A + (msg[i] ^ B)) & 0xFF;
@@ -19,6 +33,7 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
             C = (A + E) & 0xFF;
             A = E;
             B = old_A;
+            */
         }
     }
 
