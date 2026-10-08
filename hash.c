@@ -46,6 +46,46 @@ unsigned char* SSHA(const unsigned char* msg, size_t length) {
     return digest;
 }
 
+unsigned char* SSHA2(const unsigned char* msg, size_t length) {
+    // Initial Seed Values
+    unsigned char A = 56;
+    unsigned char B = 99;
+    unsigned char C = 102;
+    unsigned char D = 67;
+    unsigned char E = 76;
+    unsigned char a = 0, b = 0, c = 0, d = 0, e = 0;
+
+    for (size_t i = 0; i < length; i++) {
+        for (int round = 0; round < 8; round++) {
+            // Flowchart operations
+            a = E;
+            b = A;
+            c = ((A >> 2) ^ (B >> 1)) + E;
+            d = (B & C) | (C & D);
+            e = (B >> 1) + d + msg[i];
+
+            // Update registers
+            A = a;
+            B = b;
+            C = c;
+            D = d;
+            E = e;
+        }
+    }
+
+    // Allocate memory for the 5-byte hash result
+    unsigned char* hash = (unsigned char*)malloc(5 * sizeof(unsigned char));
+    if (hash != NULL) {
+        hash[0] = A;
+        hash[1] = B;
+        hash[2] = C;
+        hash[3] = D;
+        hash[4] = E;
+    }
+
+    return hash;
+}
+
 int digest_equal(struct Digest digest1, struct Digest digest2) {
     return ((digest1.hash0 == digest2.hash0) &&
         (digest1.hash1 == digest2.hash1) &&
